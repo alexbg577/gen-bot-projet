@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Raizen Gen</title>
+  <style>
+    body { background: #313338; color: #dcddde; font-family: 'gg sans', sans-serif; margin: 0; }
+    .sidebar { width: 250px; background: #1e1f22; height: 100vh; position: fixed; padding: 20px; }
+    .main { margin-left: 270px; padding: 20px; }
+    .card { background: #1e1f22; padding: 20px; border-radius: 8px; margin-bottom: 15px; }
+    .stat { display: inline-block; margin-right: 30px; }
+    .stat-value { font-size: 24px; font-weight: bold; color: #5865F2; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 10px; border-bottom: 1px solid #313338; }
+    .btn { background: #5865F2; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; }
+    .btn-red { background: #ED4245; }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>⚡ Raizen Gen</h2>
+    <p>Welcome, <%= user.username %></p>
+    <hr>
+    <a href="/dashboard" style="color: #dcddde; display: block; margin: 10px 0;">Dashboard</a>
+    <a href="/dashboard/stock" style="color: #dcddde; display: block; margin: 10px 0;">Stock</a>
+    <a href="/dashboard/tickets" style="color: #dcddde; display: block; margin: 10px 0;">Tickets</a>
+    <a href="/logout" style="color: #ED4245; display: block; margin: 10px 0;">Logout</a>
+  </div>
+
+  <div class="main">
+    <h1>Dashboard</h1>
+
+    <div class="card">
+      <h3>Quick Stats</h3>
+      <div class="stat">
+        <div class="stat-value"><%= stock.length %></div>
+        <div>Stock Types</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value"><%= tickets.length %></div>
+        <div>Open Tickets</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value"><%= topUsers.length %></div>
+        <div>Top Users</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Stock Overview</h3>
+      <table>
+        <tr><th>Tier</th><th>Service</th><th>Available</th></tr>
+        <% stock.forEach(s => { %>
+          <tr><td><%= s.tier.toUpperCase() %></td><td><%= s.service %></td><td><%= s.count %></td></tr>
+        <% }) %>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Recent Tickets</h3>
+      <table>
+        <tr><th>User</th><th>Service</th><th>Tier</th><th>Status</th></tr>
+        <% tickets.forEach(t => { %>
+          <tr><td><%= t.user_id %></td><td><%= t.service %></td><td><%= t.tier %></td><td><%= t.status %></td></tr>
+        <% }) %>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

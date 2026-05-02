@@ -1,0 +1,32 @@
+{
+  "name": "raizen-gen-bot",
+  "version": "1.0.0",
+  "description": "Raizen Gen - Advanced Discord Gen Bot with Web Interface",
+  "main": "src/bot.js",
+  "scripts": {
+    "start": "node src/bot.js",
+    "deploy": "node src/deploy-commands.js",
+    "web": "node src/web/app.js",
+    "dev": "concurrently \"node src/bot.js\" \"node src/web/app.js\"",
+    "render": "node src/bot.js & node src/web/app.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "ejs": "^3.1.9",
+    "better-sqlite3": "^9.4.3",
+    "node-cron": "^3.0.3",
+    "adm-zip": "^0.5.10",
+    "axios": "^1.6.5",
+    "express-session": "^1.18.0",
+    "connect-sqlite3": "^0.9.4",
+    "discord.js-selfbot-v13": "^3.2.1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}

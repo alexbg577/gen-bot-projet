@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raizen Gen - Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/discord-style@1.0.0/dist/discord-style.min.css" rel="stylesheet">
+  <style>
+    body { background: #313338; color: #dcddde; font-family: 'gg sans', sans-serif; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .header { background: #1e1f22; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+    .card { background: #1e1f22; padding: 20px; border-radius: 8px; margin-bottom: 15px; }
+    .btn { background: #5865F2; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+    .btn:hover { background: #4752C4; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>⚡ Raizen Gen</h1>
+      <p>Advanced Discord Gen Bot with Modern Web Interface</p>
+      <% if (!user) { %>
+        <a href="/login" class="btn">Login</a>
+      <% } else { %>
+        <a href="/dashboard" class="btn">Dashboard</a>
+        <a href="/logout" class="btn" style="background: #ED4245;">Logout</a>
+      <% } %>
+    </div>
+
+    <div class="card">
+      <h2>Features</h2>
+      <ul>
+        <li>🎫 Advanced Ticket System</li>
+        <li>📦 Stock Management (Free/Premium/Booster/Extreme)</li>
+        <li>🏆 Vouch System with Role Promotions</li>
+        <li>🎉 Giveaway System</li>
+        <li>🔐 Verification System</li>
+        <li>📊 Real-time Dashboard</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
