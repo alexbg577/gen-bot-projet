@@ -3,10 +3,9 @@ const express = require('express');
 const session = require('express-session');
 const SQLiteStore = require('connect-sqlite3')(session);
 const path = require('path');
-const db = require('./utils/database');
+const db = require('../utils/database');
 
 const app = express();
-const PORT = process.env.WEB_PORT || 3000;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -67,13 +66,6 @@ app.get('/gen', requireAuth, (req, res) => {
   db.run('UPDATE stock SET claimed_by = ?, claimed_at = ? WHERE id = ?', ['web_user', Math.floor(Date.now() / 1000), stock.id]);
 
   res.json({ success: true, credentials: stock.credentials });
-});
-
-const PORT = process.env.PORT || process.env.WEB_PORT || 3000;
-const HOST = '0.0.0.0';
-
-app.listen(PORT, HOST, () => {
-  console.log(`🌐 Web interface running on ${HOST}:${PORT}`);
 });
 
 module.exports = app;

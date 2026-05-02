@@ -5,13 +5,6 @@ const db = require('./utils/database');
 const fs = require('fs');
 const path = require('path');
 
-// Start web server
-try {
-  const webApp = require('./web/app');
-} catch (err) {
-  console.log('Web server not started:', err.message);
-}
-
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,

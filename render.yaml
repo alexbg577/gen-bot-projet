@@ -4,7 +4,7 @@ services:
     env: node
     plan: free
     buildCommand: npm install
-    startCommand: node bot.js
+    startCommand: node bot.js & node server.js
     envVars:
       - key: NODE_ENV
         value: production
@@ -22,5 +22,7 @@ services:
         generateValue: true
       - key: DATABASE_PATH
         value: ./data/raizen_gen.db
+      - key: PORT
+        value: "3000"
       - key: WEB_PORT
         value: "3000"
