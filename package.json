@@ -15,18 +15,17 @@
     "dotenv": "^16.4.5",
     "express": "^4.18.2",
     "ejs": "^3.1.9",
-    "better-sqlite3": "^9.4.3",
+    "sql.js": "^1.10.2",
     "node-cron": "^3.0.3",
     "adm-zip": "^0.5.10",
     "axios": "^1.6.5",
     "express-session": "^1.18.0",
-    "connect-sqlite3": "^0.9.4",
-    "discord.js-selfbot-v13": "^3.2.1"
+    "connect-sqlite3": "^0.9.4"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
   },
   "engines": {
-    "node": ">=18.x"
+    "node": "20.x"
   }
 }
