@@ -59,7 +59,7 @@ async function sendStockUpdate(client) {
     .setTimestamp();
 
   for (const tier of tiers) {
-    const stocks = db.prepare('SELECT service, COUNT(*) as count FROM stock WHERE tier = ? AND claimed_by IS NULL GROUP BY service').all(tier);
+    const stocks = db.all('SELECT service, COUNT(*) as count FROM stock WHERE tier = ? AND claimed_by IS NULL GROUP BY service', [tier]);
     if (stocks.length > 0) {
       const stockList = stocks.map(s => `**${s.service}**: ${s.count} available`).join('\n');
       embed.addFields({ name: `${tier.toUpperCase()} Stock`, value: stockList || 'Empty', inline: false });

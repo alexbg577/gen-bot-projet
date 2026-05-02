@@ -1,5 +1,5 @@
 const { Events, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, StringSelectMenuBuilder, PermissionFlagsBits, MessageFlags } = require('discord.js');
-const db = require('../utils/database');
+const db = require('./utils/database');
 
 module.exports = {
   name: Events.InteractionCreate,

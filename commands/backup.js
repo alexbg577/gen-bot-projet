@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, MessageFlags } = require('discord.js');
-const db = require('../utils/database');
+const db = require('./utils/database');
 const fs = require('fs');
 const path = require('path');
 
@@ -7,7 +7,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('backup')
     .setDescription('Create and send database backup (Admin only)')
-    .setDefaultMemberPermissions(PermissionBits.Administrator),
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
   async execute(interaction) {
     await interaction.deferReply({ flags: MessageFlags.Ephemeral });
