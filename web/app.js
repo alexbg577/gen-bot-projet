@@ -69,4 +69,11 @@ app.get('/gen', requireAuth, (req, res) => {
   res.json({ success: true, credentials: stock.credentials });
 });
 
+const PORT = process.env.PORT || process.env.WEB_PORT || 3000;
+const HOST = '0.0.0.0';
+
+app.listen(PORT, HOST, () => {
+  console.log(`🌐 Web interface running on ${HOST}:${PORT}`);
+});
+
 module.exports = app;
