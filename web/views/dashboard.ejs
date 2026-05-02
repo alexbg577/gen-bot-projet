@@ -5,64 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Raizen Gen</title>
   <style>
-    body { background: #313338; color: #dcddde; font-family: 'gg sans', sans-serif; margin: 0; }
-    .sidebar { width: 250px; background: #1e1f22; height: 100vh; position: fixed; padding: 20px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #313338; color: #dcddde; font-family: 'gg sans', 'Noto Sans', sans-serif; }
+    .sidebar { width: 250px; background: #1e1f22; height: 100vh; position: fixed; padding: 20px; display: flex; flex-direction: column; }
     .main { margin-left: 270px; padding: 20px; }
+    .header { background: #1e1f22; padding: 20px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
     .card { background: #1e1f22; padding: 20px; border-radius: 8px; margin-bottom: 15px; }
-    .stat { display: inline-block; margin-right: 30px; }
-    .stat-value { font-size: 24px; font-weight: bold; color: #5865F2; }
+    .card h3 { color: #ffffff; margin-bottom: 15px; font-size: 18px; }
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+    .stat-card { background: #2b2d31; padding: 20px; border-radius: 8px; text-align: center; }
+    .stat-value { font-size: 32px; font-weight: bold; color: #5865F2; }
+    .stat-label { color: #949ba4; font-size: 14px; margin-top: 5px; }
     table { width: 100%; border-collapse: collapse; }
-    th, td { text-align: left; padding: 10px; border-bottom: 1px solid #313338; }
-    .btn { background: #5865F2; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; }
-    .btn-red { background: #ED4245; }
+    th { background: #2b2d31; padding: 12px; text-align: left; color: #949ba4; font-size: 14px; font-weight: 600; }
+    td { padding: 12px; border-bottom: 1px solid #2b2d31; color: #dcddde; }
+    tr:hover { background: #2b2d31; }
+    .btn { background: #5865F2; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block; font-size: 14px; }
+    .btn:hover { background: #4752C4; }
+    .sidebar a { color: #949ba4; text-decoration: none; padding: 10px 0; display: block; transition: color 0.2s; }
+    .sidebar a:hover { color: #ffffff; }
+    .sidebar .active { color: #ffffff; }
+    .user-info { margin-top: auto; padding: 15px; background: #2b2d31; border-radius: 8px; }
   </style>
 </head>
 <body>
   <div class="sidebar">
     <h2>⚡ Raizen Gen</h2>
-    <p>Welcome, <%= user.username %></p>
-    <hr>
-    <a href="/dashboard" style="color: #dcddde; display: block; margin: 10px 0;">Dashboard</a>
-    <a href="/dashboard/stock" style="color: #dcddde; display: block; margin: 10px 0;">Stock</a>
-    <a href="/dashboard/tickets" style="color: #dcddde; display: block; margin: 10px 0;">Tickets</a>
-    <a href="/logout" style="color: #ED4245; display: block; margin: 10px 0;">Logout</a>
+    <p style="color: #949ba4; font-size: 14px; margin-bottom: 20px;">Welcome, <%= user.username %></p>
+    <a href="/dashboard" class="active">📊 Dashboard</a>
+    <a href="/dashboard/stock">📦 Stock</a>
+    <a href="/dashboard/tickets">🎫 Tickets</a>
+    <a href="/dashboard/users">👤 Users</a>
+    <div class="user-info">
+      <p style="color: #ffffff; margin-bottom: 5px;"><%= user.username %></p>
+      <p style="color: #949ba4; font-size: 12px; margin-bottom: 10px;"><%= user.role %></p>
+      <a href="/logout" style="color: #ED4245;">Logout</a>
+    </div>
   </div>
 
   <div class="main">
-    <h1>Dashboard</h1>
+    <div class="header">
+      <h1>Dashboard</h1>
+      <div>
+        <span style="color: #949ba4; margin-right: 10px;">Bot Status: <span style="color: #57F287;">● Online</span></span>
+      </div>
+    </div>
 
-    <div class="card">
-      <h3>Quick Stats</h3>
-      <div class="stat">
+    <div class="stat-grid">
+      <div class="stat-card">
         <div class="stat-value"><%= stock.length %></div>
-        <div>Stock Types</div>
+        <div class="stat-label">Stock Types</div>
       </div>
-      <div class="stat">
+      <div class="stat-card">
         <div class="stat-value"><%= tickets.length %></div>
-        <div>Open Tickets</div>
+        <div class="stat-label">Open Tickets</div>
       </div>
-      <div class="stat">
+      <div class="stat-card">
         <div class="stat-value"><%= topUsers.length %></div>
-        <div>Top Users</div>
+        <div class="stat-label">Top Users</div>
       </div>
     </div>
 
     <div class="card">
-      <h3>Stock Overview</h3>
+      <h3>📦 Stock Overview</h3>
       <table>
         <tr><th>Tier</th><th>Service</th><th>Available</th></tr>
         <% stock.forEach(s => { %>
-          <tr><td><%= s.tier.toUpperCase() %></td><td><%= s.service %></td><td><%= s.count %></td></tr>
+          <tr>
+            <td><strong><%= s.tier.toUpperCase() %></strong></td>
+            <td><%= s.service %></td>
+            <td><span style="color: #57F287;"><%= s.count %></span></td>
+          </tr>
         <% }) %>
       </table>
     </div>
 
     <div class="card">
-      <h3>Recent Tickets</h3>
+      <h3>🎫 Recent Tickets</h3>
       <table>
         <tr><th>User</th><th>Service</th><th>Tier</th><th>Status</th></tr>
         <% tickets.forEach(t => { %>
-          <tr><td><%= t.user_id %></td><td><%= t.service %></td><td><%= t.tier %></td><td><%= t.status %></td></tr>
+          <tr>
+            <td><%= t.user_id %></td>
+            <td><%= t.service %></td>
+            <td><span style="background: #5865F2; padding: 4px 8px; border-radius: 4px; font-size: 12px;"><%= t.tier %></span></td>
+            <td><span style="color: #FEE75C;"><%= t.status %></span></td>
+          </tr>
+        <% }) %>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>🏆 Top Users</h3>
+      <table>
+        <tr><th>User</th><th>Vouches</th></tr>
+        <% topUsers.forEach(u => { %>
+          <tr>
+            <td><%= u.id %></td>
+            <td><span style="color: #FEE75C;"><%= u.vouches || 0 %></span></td>
+          </tr>
         <% }) %>
       </table>
     </div>

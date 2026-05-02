@@ -6,12 +6,24 @@
   <title>Raizen Gen - Home</title>
   <link href="https://cdn.jsdelivr.net/npm/discord-style@1.0.0/dist/discord-style.min.css" rel="stylesheet">
   <style>
-    body { background: #313338; color: #dcddde; font-family: 'gg sans', sans-serif; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #313338; color: #dcddde; font-family: 'gg sans', 'Noto Sans', sans-serif; }
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    .header { background: #1e1f22; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-    .card { background: #1e1f22; padding: 20px; border-radius: 8px; margin-bottom: 15px; }
-    .btn { background: #5865F2; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+    .header { background: #1e1f22; padding: 40px; border-radius: 8px; margin-bottom: 20px; text-align: center; }
+    .header h1 { color: #5865F2; font-size: 48px; margin-bottom: 10px; }
+    .header p { color: #949ba4; font-size: 18px; margin-bottom: 20px; }
+    .btn { background: #5865F2; color: white; padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; text-decoration: none; display: inline-block; transition: background 0.2s; }
     .btn:hover { background: #4752C4; }
+    .btn.red { background: #ED4245; }
+    .btn.red:hover { background: #C03537; }
+    .card { background: #1e1f22; padding: 20px; border-radius: 8px; margin-bottom: 15px; }
+    .card h2 { color: #ffffff; margin-bottom: 15px; }
+    .card ul { list-style: none; padding: 0; }
+    .card li { padding: 8px 0; border-bottom: 1px solid #2b2d31; }
+    .card li:last-child { border-bottom: none; }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
+    .feature-card { background: #1e1f22; padding: 20px; border-radius: 8px; }
+    .feature-card h3 { color: #5865F2; margin-bottom: 10px; }
   </style>
 </head>
 <body>
@@ -23,20 +35,27 @@
         <a href="/login" class="btn">Login</a>
       <% } else { %>
         <a href="/dashboard" class="btn">Dashboard</a>
-        <a href="/logout" class="btn" style="background: #ED4245;">Logout</a>
+        <a href="/logout" class="btn red">Logout</a>
       <% } %>
     </div>
 
-    <div class="card">
-      <h2>Features</h2>
-      <ul>
-        <li>🎫 Advanced Ticket System</li>
-        <li>📦 Stock Management (Free/Premium/Booster/Extreme)</li>
-        <li>🏆 Vouch System with Role Promotions</li>
-        <li>🎉 Giveaway System</li>
-        <li>🔐 Verification System</li>
-        <li>📊 Real-time Dashboard</li>
-      </ul>
+    <div class="features">
+      <div class="feature-card">
+        <h3>🎫 Ticket System</h3>
+        <p>Advanced gen ticket system with staff claims and automatic delivery.</p>
+      </div>
+      <div class="feature-card">
+        <h3>📦 Stock Management</h3>
+        <p>Organized stock system with Free, Premium, Booster, and Extreme tiers.</p>
+      </div>
+      <div class="feature-card">
+        <h3>🏆 Vouch System</h3>
+        <p>Staff vouch system with role promotions at 30, 60, and 100 vouches.</p>
+      </div>
+      <div class="feature-card">
+        <h3>🎉 Giveaways</h3>
+        <p>Easy giveaway creation with customizable duration and winners.</p>
+      </div>
     </div>
   </div>
 </body>

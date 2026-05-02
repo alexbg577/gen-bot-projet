@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: raizen-gen-bot
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node bot.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 20.x
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: CLIENT_ID
+        sync: false
+      - key: CLIENT_SECRET
+        sync: false
+      - key: GUILD_ID
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DATABASE_PATH
+        value: ./data/raizen_gen.db
+      - key: WEB_PORT
+        value: "3000"
