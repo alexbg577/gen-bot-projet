@@ -1,12 +1,16 @@
 require('dotenv').config();
-const { Client, GatewayIntentBits, Collection, REST, Routes, Events, ButtonBuilder, ButtonStyle, ActionRowBuilder, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, StringSelectMenuBuilder } = require('discord.js');
+const { Client, GatewayIntentBits, Collection, REST, Routes, Events, ButtonBuilder, ButtonStyle, ActionRowBuilder, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
 const cron = require('node-cron');
 const db = require('./utils/database');
 const fs = require('fs');
 const path = require('path');
 
 // Start web server
-const webApp = require('./web/app');
+try {
+  const webApp = require('./web/app');
+} catch (err) {
+  console.log('Web server not started:', err.message);
+}
 
 const client = new Client({
   intents: [
@@ -52,7 +56,7 @@ cron.schedule('0 */2 * * *', async () => {
 });
 
 async function sendStockUpdate(client) {
-  const stockChannel = await client.channels.fetch(process.env.STOCK_LOGS_CHANNEL_ID);
+  const stockChannel = await client.channels.fetch(process.env.STOCK_LOGS_CHANNEL_ID).catch(() => null);
   if (!stockChannel) return;
 
   const tiers = ['free', 'premium', 'booster', 'extreme'];
@@ -71,17 +75,15 @@ async function sendStockUpdate(client) {
     }
   }
 
-  await stockChannel.send({ embeds: [embed] });
+  stockChannel.send({ embeds: [embed] }).catch(() => {});
 }
 
 // Check member status for free gen access
 async function checkFreeGenAccess(member) {
-  const requiredInvite = process.env.REQUIRED_SERVER_INVITE;
   try {
-    const presence = await member.fetch(true).catch(() => null);
-    if (!presence || !presence.presence) return false;
-    const activities = presence.presence.activities;
-    return activities.some(activity =>
+    await member.fetch();
+    if (!member.presence) return false;
+    return member.presence.activities.some(activity =>
       activity.type === 4 && activity.state && activity.state.includes('discord.gg/PPdYTSFuby')
     );
   } catch {
@@ -91,10 +93,12 @@ async function checkFreeGenAccess(member) {
 
 // Monitor presence updates for free gen role
 client.on(Events.PresenceUpdate, async (oldPresence, newPresence) => {
-  if (!newPresence?.member || newPresence.guild.id !== process.env.GUILD_ID) return;
+  if (!newPresence?.member || newPresence.guild?.id !== process.env.GUILD_ID) return;
 
   const member = newPresence.member;
   const basicGenRole = process.env.ROLE_BASIC_GEN;
+  if (!basicGenRole) return;
+
   const hasRole = member.roles.cache.has(basicGenRole);
   const hasAccess = await checkFreeGenAccess(member);
 
@@ -105,8 +109,33 @@ client.on(Events.PresenceUpdate, async (oldPresence, newPresence) => {
   }
 });
 
-client.once(Events.ClientReady, () => {
+client.once(Events.ClientReady, async () => {
   console.log(`✅ ${client.user.tag} is online!`);
+
+  // Deploy slash commands on startup
+  const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
+
+  try {
+    const commands = [];
+    const commandsPath = path.join(__dirname, 'commands');
+    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
+    for (const file of commandFiles) {
+      const command = require(path.join(commandsPath, file));
+      if (command.data) {
+        commands.push(command.data.toJSON());
+      }
+    }
+
+    console.log(`Deploying ${commands.length} commands...`);
+    await rest.put(
+      Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
+      { body: commands }
+    );
+    console.log(`✅ Successfully deployed ${commands.length} commands!`);
+  } catch (error) {
+    console.error('Error deploying commands:', error);
+  }
 });
 
 client.login(process.env.DISCORD_TOKEN);
