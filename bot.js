@@ -5,6 +5,9 @@ const db = require('./utils/database');
 const fs = require('fs');
 const path = require('path');
 
+// Start web server
+const webApp = require('./web/app');
+
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,

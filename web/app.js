@@ -70,5 +70,7 @@ app.get('/gen', requireAuth, (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Web interface running on port ${PORT}`);
+  console.log(`🌐 Web interface running on port ${PORT}`);
 });
+
+module.exports = app;
