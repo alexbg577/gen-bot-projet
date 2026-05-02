@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
-const db = require('./utils/database');
+const db = require('../utils/database');
 const cron = require('node-cron');
 
 module.exports = {

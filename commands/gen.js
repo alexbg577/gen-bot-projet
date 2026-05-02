@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, MessageFlags } = require('discord.js');
-const db = require('./utils/database');
+const db = require('../utils/database');
 
 const genChannels = {
   [process.env.FREE_GEN_CHANNEL_ID]: { tier: 'free', role: process.env.ROLE_BASIC_GEN },

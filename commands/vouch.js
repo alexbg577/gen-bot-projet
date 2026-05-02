@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, MessageFlags } = require('discord.js');
-const db = require('./utils/database');
+const db = require('../utils/database');
 
 const vouchRoles = [
   { vouches: 30, role: process.env.ROLE_TRAINED_MOD },
